@@ -6,6 +6,10 @@ const authenticateUser = async (req, res, next) => {
     try {
         let token = req.headers.authorization;
 
+        if(!token) {
+            return res.status(401).json(new ApiResponse(401, "No token provided", {}));
+        }
+
         if(token && token.startsWith("Bearer")) {
             token = token.split(" ")[1];
             const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);

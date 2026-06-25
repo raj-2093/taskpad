@@ -2,6 +2,7 @@ import { User } from "../models/User.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { STATUS_CODE } from "../utils/constants.js";
+import jwt from "jsonwebtoken";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -96,6 +97,31 @@ const loginUser = asyncHandler(async (req, res) => {
 
 }, "loginUser");
 
+const refresh = asyncHandler(async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if(!refreshToken) return res.status(STATUS_CODE.RESOURCE_UNAUTHORIZED).json(new ApiResponse(STATUS_CODE.RESOURCE_UNAUTHORIZED, "No refresh token provided", {}));
+
+  const { id } = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+  if(!id) return res.status(STATUS_CODE.RESOURCE_UNAUTHORIZED).json(new ApiResponse(STATUS_CODE.RESOURCE_UNAUTHORIZED, "Invalid refresh token", {}));
+
+  const {
+    refreshToken: newRefreshToken,
+    accessToken
+  } = await generateAccessAndRefreshTokens(id);
+
+  return res
+  .cookie("refreshToken", newRefreshToken, {
+    httpOnly: true,
+    maxAge: 30*24*60*60*1000
+  })
+  .status(STATUS_CODE.RESOURCE_CREATED)
+  .json(new ApiResponse(STATUS_CODE.RESOURCE_CREATED, "Tokens refreshed successfully", {
+    accessToken
+  }));
+}, "refresh");
+
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id).select("-password -refreshToken");
 
@@ -129,4 +155,9 @@ const updateUserProfile = asyncHandler(
   "updateUserProfile",
 );
 
-export { registerUser, loginUser, getUserProfile, updateUserProfile };
+const logoutUser = asyncHandler(async (req, res) => {
+  res.clearCookie("refreshToken");
+  return res.status(STATUS_CODE.RESOURCE_DELETED).json(new ApiResponse(STATUS_CODE.RESOURCE_DELETED, "User logged out successfully", {}));
+}, "logoutUser");
+
+export { registerUser, loginUser, getUserProfile, updateUserProfile, refresh, logoutUser };
