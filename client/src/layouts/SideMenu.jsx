@@ -32,7 +32,7 @@ export default function SideMenu({ activeMenu }) {
 
   useEffect(() => {
     if (user) {
-      setSideMenuData(SIDE_MENU_USER_DATA);
+      setSideMenuData(user.role === "admin" ? SIDE_MENU_DATA : SIDE_MENU_USER_DATA);
     }
   }, [user]);
 

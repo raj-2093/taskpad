@@ -5,7 +5,7 @@ import authImage from '../assets/auth-image-00.jpg'
 export default function AuthLayout({ children }) {
   return (
     <div className='flex'>
-      <div className='w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12'>
+      <div className='w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12 relative'>
         <h2 className='text-lg font-medium text-black'>Taskpad</h2>
         {children}
       </div>

@@ -39,7 +39,7 @@ export default function ApiProvider({ children }) {
 
         setAccessToken(response.data.data.accessToken);
       } catch (error) {
-        console.log(`Error at fetchToken: ${error}`);
+        console.error(`Error at fetchToken: ${error}`);
         setAccessToken("");
       }
     };
@@ -51,14 +51,13 @@ export default function ApiProvider({ children }) {
     const reqInterceptor = api.interceptors.request.use(
       (config) => {
         if (accessToken) {
-          console.log(`attachRequestInterceptor > header set for calling api: ${config.url}`);
           config.headers.Authorization = "Bearer " + accessToken;
         }
 
         return config;
       },
       (error) => {
-        // console.log(`Error at attachRequestInterceptor: ${error}`);
+        console.error(`Error at attachRequestInterceptor: ${error}`);
         throw error;
       },
     );
@@ -85,14 +84,13 @@ export default function ApiProvider({ children }) {
           config._retry = true;
           refresh()
             .then((response) => {
-              console.log(`resInterceptor > retrying`);
               const { accessToken } = response.data.data;
               setAccessToken(accessToken);
               config.headers["Authorization"] = `Bearer ${accessToken}`;
               return api(config);
             })
             .catch((error) => {
-              console.log(`Error at resInterceptor: ${error}`);
+              console.error(`Error at resInterceptor: ${error}`);
             });
         }
       },
@@ -109,7 +107,6 @@ export default function ApiProvider({ children }) {
   useEffect(() => {
     const reqInterceptor = attachRequestInterceptor();
     const resInterceptor = attachResponseInterceptor();
-    console.log(`ApiProvider > useEffect[] > Interceptors attached`);
     
     if (accessToken && !user) {
       fetchUser()
@@ -118,7 +115,7 @@ export default function ApiProvider({ children }) {
           setLoading(false);
         })
         .catch((error) => {
-          console.log(`Error at fetchUser: ${error}`);
+          console.error(`Error at fetchUser: ${error}`);
           setLoading(false);
         });
       // setLoading(false);
@@ -129,7 +126,6 @@ export default function ApiProvider({ children }) {
     return () => {
       api.interceptors.request.eject(reqInterceptor);
       api.interceptors.response.eject(resInterceptor);
-      console.log(`ApiProvider > useEffect[] > Interceptors ejected`);
     };
   }, [accessToken]);
 
