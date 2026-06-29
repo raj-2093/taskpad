@@ -26,7 +26,7 @@ COPY --from=builder /home/app .
 # Non-root user for security
 USER node
 
-EXPOSE 5000   # Change if your app uses a different port
+EXPOSE 8080   # Change if your app uses a different port
 
 # Use exec form so signals (SIGTERM) reach Node properly
 CMD ["node", "server.js"]   # or "dist/index.js", "app.js", etc.
