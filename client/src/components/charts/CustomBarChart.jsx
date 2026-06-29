@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   Cell
 } from "recharts";
-import CustomToolTip from "./CustomToolTip.jsx";
+import CustomToolTip from "./CustomToolTip";
 
 export default function CustomBarChart({ data }) {
   const getBarColor = (entry) => {
