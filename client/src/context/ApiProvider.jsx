@@ -39,7 +39,7 @@ export default function ApiProvider({ children }) {
 
         setAccessToken(response.data.data.accessToken);
       } catch (error) {
-        console.error(`Error at fetchToken: ${error}`);
+        // console.error(`Error at fetchToken: ${error}`);
         setAccessToken("");
       }
     };

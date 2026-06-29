@@ -21,6 +21,7 @@ export default function Dashboard() {
   const [dashboardData, setDashboardData] = useState(null);
   const [pieChartData, setPieChartData] = useState([]);
   const [barChartData, setBarChartData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const cookChartData = (data) => {
     const taskDistribution = data?.taskDistribution || null;
@@ -46,6 +47,7 @@ export default function Dashboard() {
   const fetchDashboardData = async () => {
     try {
       const response = await api.get(API_PATHS.TASKS.GET_DASHBOARD_DATA);
+      setLoading(false);
       if (response.data.data) {
         setDashboardData(response.data.data);
         cookChartData(response.data.data?.charts || null);
@@ -56,15 +58,15 @@ export default function Dashboard() {
   };
 
   const onSeeMore = () => {
-    navigate('/admin/tasks');
-  }
+    navigate("/admin/tasks");
+  };
 
   useEffect(() => {
     fetchDashboardData();
   }, []);
 
   return (
-    <DashboardLayout activeMenu={"Dashboard"}>
+    <DashboardLayout activeMenu={"Dashboard"} isLoading={loading}>
       <div className="card my-5">
         <div className="col-span-3">
           <h2 className="text-xl md:text-2xl">
@@ -76,45 +78,51 @@ export default function Dashboard() {
                 : "Evening"}
             ! {user?.name}
           </h2>
-          <p className="text-xs md:text-[13px] text-gray-400 mt-1.5">{moment().format("dddd Do MMM YYYY")}</p>
+          <p className="text-xs md:text-[13px] text-gray-400 mt-1.5">
+            {moment().format("dddd Do MMM YYYY")}
+          </p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-5">
           <InfoCard
             label="Total Tasks"
-            value={addThousandSeparators(dashboardData?.charts?.taskDistribution?.All || 0)}
+            value={addThousandSeparators(
+              dashboardData?.charts?.taskDistribution?.All || 0,
+            )}
             color="bg-primary"
           />
           <InfoCard
             label="Pending Tasks"
-            value={addThousandSeparators(dashboardData?.charts?.taskDistribution?.Pending || 0)}
+            value={addThousandSeparators(
+              dashboardData?.charts?.taskDistribution?.Pending || 0,
+            )}
             color="bg-violet-500"
           />
           <InfoCard
             label="Tasks In Progress"
-            value={addThousandSeparators(dashboardData?.charts?.taskDistribution?.InProgress || 0)}
+            value={addThousandSeparators(
+              dashboardData?.charts?.taskDistribution?.InProgress || 0,
+            )}
             color="bg-cyan-500"
           />
           <InfoCard
             label="Completed Tasks"
-            value={addThousandSeparators(dashboardData?.charts?.taskDistribution?.Completed || 0)}
+            value={addThousandSeparators(
+              dashboardData?.charts?.taskDistribution?.Completed || 0,
+            )}
             color="bg-lime-500  "
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6">
-
         <div>
           <div className="card">
             <div className="flex items justify-between">
               <h5 className="font-medium">Task Distribution</h5>
             </div>
 
-            <CustomPieChart
-              data={pieChartData}
-              colors={COLORS}
-            />
+            <CustomPieChart data={pieChartData} colors={COLORS} />
           </div>
         </div>
 
@@ -124,9 +132,7 @@ export default function Dashboard() {
               <h5 className="font-medium">Task Priority Levels</h5>
             </div>
 
-            <CustomBarChart
-              data={pieChartData}
-            />
+            <CustomBarChart data={barChartData} />
           </div>
         </div>
 

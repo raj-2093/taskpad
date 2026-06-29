@@ -6,6 +6,7 @@ export default function ProfilePhotoSelector({image, setImage}) {
     const [previewUrl, setPreviewUrl] = useState(null);
 
     const handleImageChange = (event) => {
+      console.log(`handleImageChange`);
         const file = event.target.files[0];
 
         if(file) {
@@ -19,6 +20,10 @@ export default function ProfilePhotoSelector({image, setImage}) {
     const handleRemoveImage = () => {
         setImage(null);
         setPreviewUrl(null);
+        // Reset input value so the same file can be selected again
+        if (inputRef.current) {
+            inputRef.current.value = '';
+        }
     };
 
     const onChooseFile = () => {

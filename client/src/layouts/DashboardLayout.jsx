@@ -2,8 +2,9 @@ import React from 'react'
 import { useApi } from '../context/ApiProvider'
 import Navbar from './Navbar';
 import SideMenu from './SideMenu';
+import Loader from '../components/Loader';
 
-export default function DashboardLayout({children, activeMenu}) {
+export default function DashboardLayout({children, activeMenu, isLoading}) {
     const { user } = useApi();
 
   return (
@@ -12,11 +13,14 @@ export default function DashboardLayout({children, activeMenu}) {
 
       { user && (
         <div className='flex'>
-            <div className="max-[1080px]:hidden">
+            <div className="max-lg:hidden">
                 <SideMenu activeMenu={activeMenu} />
             </div>
 
-            <div className="grow mx-5">{children}</div>
+            <div className="grow mx-5">
+              {isLoading && <Loader />}
+              {!isLoading && (children)}
+            </div>
         </div>
       ) }
     </div>

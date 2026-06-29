@@ -259,7 +259,7 @@ const updateTaskChecklist = asyncHandler(async (req, res) => {
 
   return res.status(STATUS_CODE.RESOURCE_UPDATED).json(
     new ApiResponse(STATUS_CODE.RESOURCE_UPDATED, "Task checklist updated", {
-      task: updateTask,
+      task: updatedTask,
     }),
   );
 }, "updateTaskChecklist");

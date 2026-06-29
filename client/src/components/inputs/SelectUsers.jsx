@@ -48,6 +48,8 @@ export default function SelectUsers({
     useEffect(() => {
         if(selectedUsers.length === 0) {
             setTempSelectedUsers([]);
+        } else {
+            setTempSelectedUsers([...selectedUsers]);
         }
     }, [selectedUsers]);
 
@@ -79,7 +81,7 @@ export default function SelectUsers({
                     <img 
                         src={user.profileImageUrl === "" ? null : user.profileImageUrl} 
                         alt={user.name}
-                        className='w-10 h-10 rounded-full'
+                        className='w-10 h-10 rounded-full object-cover'
                     />
                     <div className="flex-1">
                         <p className="font-medium text-gray-800 dark:text-white">{user.name}</p>

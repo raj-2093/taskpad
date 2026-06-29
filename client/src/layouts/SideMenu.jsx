@@ -43,7 +43,7 @@ export default function SideMenu({ activeMenu }) {
           <img
             src={user?.profileImageUrl || null}
             alt="Profile Image"
-            className="w-20 h-20 bg-slate-400 rounded-full"
+            className="w-20 h-20 bg-slate-400 rounded-full object-cover"
           />
         </div>
 
@@ -63,7 +63,7 @@ export default function SideMenu({ activeMenu }) {
       {sideMenuData?.map((item, index) => (
         <button
           key={`menu-${index}`}
-          className={`w-full flex items-center gap-4 text-[15px] ${
+          className={`w-full flex items-center gap-4 text-[15px] hover:text-primary hover:bg-linear-to-r hover:from-blue-50/40 hover:to-blue-100/50 ${
             activeMenu == item.label
               ? "text-primary bg-linear-to-r from-blue-50/40 to-blue-100/50 border-r-3"
               : ""

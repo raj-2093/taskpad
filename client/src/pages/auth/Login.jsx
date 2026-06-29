@@ -19,15 +19,15 @@ export default function Login() {
   const loginIds = {
     admin: {
       email: "admin@test.com",
-      password: "123456",
+      password: "12345678",
     },
     karl: {
       email: "karl@test.com",
-      password: "123456",
+      password: "12345678",
     },
     jessica: {
       email: "jessica@test.com",
-      password: "123456",
+      password: "12345678",
     },
   };
 

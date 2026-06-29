@@ -12,6 +12,7 @@ import { API_PATHS } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
 import moment from "moment";
 import Modal from "../../components/Modal";
+import DeleteAlert from "../../components/DeleteAlert";
 
 export default function CreateTask() {
   const location = useLocation();
@@ -33,6 +34,7 @@ export default function CreateTask() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+
   const handleValueChange = (key, value) => {
     setTaskData((prevData) => ({ ...prevData, [key]: value }));
   };

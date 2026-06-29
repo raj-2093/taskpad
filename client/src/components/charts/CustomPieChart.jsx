@@ -28,7 +28,7 @@ export default function CustomPieChart({ data, colors }) {
                 <Cell key={`cell-${index}`} fill={colors[index%colors.length]}/>
             ))}
         </Pie>
-        <Tooltip content={<CustomToolTip chartType={"PieChart"}/>} />
+        <Tooltip content={<CustomToolTip chartType={"PieChart"} />} />
         <Legend content={<CustomLegend/>} />
       </PieChart>
     </ResponsiveContainer>
