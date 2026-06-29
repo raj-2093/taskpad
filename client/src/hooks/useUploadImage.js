@@ -15,7 +15,7 @@ export function useUploadImage() {
                 },
             });
 
-            return response.data.data.imageUrl;
+            return response?.data?.data?.imageUrl;
         } catch (error) {
             console.error("Error uploading image:", error);
             throw error;

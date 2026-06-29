@@ -1,14 +1,16 @@
 import multer from "multer";
 
 // Configure storage
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "src/uploads/");
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`)
-    }
-});
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, "src/uploads/");
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, `${Date.now()}-${file.originalname}`)
+//     }
+// });
+
+const storage = multer.memoryStorage();
 
 // File filter
 const fileFilter = (req, file, cb) => {
