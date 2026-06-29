@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
   Cell
 } from "recharts";
-import CustomToolTip from "./CustomToolTip";
+import CustomTooltip from "./CustomTooltip";
 
 export default function CustomBarChart({ data }) {
   const getBarColor = (entry) => {
@@ -41,7 +41,7 @@ export default function CustomBarChart({ data }) {
           <YAxis tick={{ fontSize: 12, fill: "#555" }} stroke="none" />
 
           <Tooltip
-            content={<CustomToolTip chartType={"BarChart"} />}
+            content={<CustomTooltip chartType={"BarChart"} />}
             cursor={{ fill: "transparent" }}
           />
 

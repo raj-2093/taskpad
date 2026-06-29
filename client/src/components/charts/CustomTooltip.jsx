@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function CustomToolTip({ active, payload, chartType }) {
+export default function CustomTooltip({ active, payload, chartType }) {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white shadow-md rounded-lg p-2 border border-gray-300">
