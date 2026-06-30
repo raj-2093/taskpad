@@ -1,12 +1,13 @@
 import React from 'react'
 // import authImage from '../assets/auth-image.jpg'
 import authImage from '../assets/auth-image-00.jpg'
+import { Link } from 'react-router-dom'
 
 export default function AuthLayout({ children }) {
   return (
     <div className='flex'>
       <div className='w-screen h-screen md:w-[60vw] px-12 pt-8 pb-12 relative'>
-        <h2 className='text-lg font-medium text-black'>Taskpad</h2>
+        <h2 className='text-lg font-medium text-black'><Link to={"/"}>Taskpad</Link></h2>
         {children}
       </div>
 
